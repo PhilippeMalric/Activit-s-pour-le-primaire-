@@ -1,29 +1,76 @@
 .toolbar { position: sticky; top: 0; z-index: 10; }
 .title { margin-left: 10px; font-weight: 900; }
 .spacer { flex: 1 1 auto; }
-.chips { margin-right: 8px; }
+.chips { margin-right: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
 
-.wrap { padding: 14px; max-width: 1200px; margin: 0 auto; }
+.wrap { padding: 12px; max-width: 1200px; margin: 0 auto; display: grid; gap: 12px; }
+
+.settings { border-radius: 18px; padding: 12px; }
+.settings .row { display:flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.settings mat-form-field { width: 220px; max-width: 100%; }
+
+.teams { margin-top: 8px; }
+.teams-title { font-weight: 900; margin-bottom: 8px; }
+.team-buttons { display:flex; gap: 10px; flex-wrap: wrap; }
+.team-buttons button { border-radius: 14px; }
+.team-buttons button.active { border-width: 2px; }
+.teams-hint { margin-top: 8px; opacity: .7; }
 
 .card { border-radius: 18px; padding: 18px; }
-.big { min-height: 70vh; display:flex; flex-direction: column; justify-content: space-between; }
+.big { min-height: 62vh; display:flex; flex-direction: column; justify-content: space-between; }
+.end { display:flex; flex-direction: column; gap: 14px; }
 
-.mission { font-size: clamp(22px, 3vw, 40px); font-weight: 900; text-align: center; }
+.mission { font-size: clamp(20px, 3vw, 40px); font-weight: 900; text-align: center; }
 
 .fractions { display:flex; align-items:center; justify-content: center; gap: 18px; margin-top: 18px; }
 .frac { flex: 1; border-radius: 18px; padding: 18px; text-align: center; border: 2px solid rgba(0,0,0,.08); }
-.label { font-size: clamp(16px, 2vw, 26px); font-weight: 900; opacity: .7; }
-.value { font-size: clamp(44px, 7vw, 96px); font-weight: 900; letter-spacing: .5px; }
-.vs { font-size: clamp(18px, 2.6vw, 34px); font-weight: 900; opacity: .6; }
+.label { font-size: clamp(14px, 2vw, 26px); font-weight: 900; opacity: .7; }
+.value { font-size: clamp(40px, 7vw, 96px); font-weight: 900; letter-spacing: .5px; }
+.vs { font-size: clamp(16px, 2.6vw, 34px); font-weight: 900; opacity: .6; }
 
 .buttons { display:flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
 .btn { font-size: clamp(16px, 2vw, 26px); padding: 18px 18px; border-radius: 16px; }
 
-.feedback { text-align:center; margin-top: 12px; font-size: clamp(18px, 2vw, 28px); font-weight: 900; }
-.ok { }
-.bad { }
+.feedback { text-align:center; margin-top: 12px; font-size: clamp(16px, 2vw, 28px); font-weight: 900; }
 
-.hint, .explain { margin-top: 14px; font-size: clamp(16px, 1.8vw, 24px); }
+.hint, .explain { margin-top: 14px; font-size: clamp(15px, 1.8vw, 24px); }
 .hint span, .explain span { font-weight: 900; }
+.tag { font-weight: 900; opacity: .75; margin-left: 8px; }
 
 .bottom { margin-top: 14px; display:flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+.stats { display:grid; gap: 10px; grid-template-columns: 1fr; }
+@media (min-width: 800px) { .stats { grid-template-columns: 1fr 1fr 1fr; } }
+.stat { border: 2px solid rgba(0,0,0,.08); border-radius: 16px; padding: 12px; text-align: center; }
+.k { font-weight: 900; opacity: .7; }
+.v { font-size: 28px; font-weight: 900; }
+
+/* ===== Mobile-first improvements ===== */
+@media (max-width: 600px) {
+  .wrap { padding: 10px; gap: 10px; }
+
+  .toolbar { padding-left: 4px; padding-right: 4px; }
+  .title { display: none; } /* gagne de la place sur mobile */
+  .chips { margin-right: 0; }
+
+  .settings { padding: 10px; border-radius: 16px; }
+  .settings .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .settings mat-form-field { width: 100%; }
+
+  .teams-title { margin-top: 6px; }
+  .team-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .team-buttons button { width: 100%; }
+
+  .card { padding: 12px; border-radius: 16px; }
+  .big { min-height: auto; }
+
+  .fractions { flex-direction: column; gap: 10px; margin-top: 10px; }
+  .vs { display: none; }
+  .frac { padding: 12px; border-radius: 16px; }
+
+  .buttons { flex-direction: column; margin-top: 12px; }
+  .btn { width: 100%; padding: 14px 14px; border-radius: 14px; }
+
+  .bottom { flex-direction: column; }
+  .bottom button { width: 100%; }
+}

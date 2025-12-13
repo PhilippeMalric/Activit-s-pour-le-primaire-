@@ -29,6 +29,12 @@ type TeacherSheet = {
 export class TeacherNotesComponent {
   id = signal('');
 
+  constructor(private route: ActivatedRoute) {
+    this.id.set(this.route.snapshot.paramMap.get('id') ?? '');
+  }
+
+  print() { window.print(); }
+
   sheet = computed<TeacherSheet | null>(() => {
     const id = this.id();
     if (id === 'math-fractions-compare-2') {
@@ -46,29 +52,30 @@ export class TeacherNotesComponent {
           'Règle : pas de réponse sans une phrase + une stratégie.'
         ],
         rules: [
+          'Avant chaque réponse : choisir l’équipe (A/B/C/D).',
           'Après chaque manche : 1 équipe explique sa stratégie en 10 secondes.',
           'Si désaccord : deux stratégies différentes acceptées si cohérentes.',
           'Objectif : 10 manches, puis mini bilan.'
         ],
         facilitation: [
           'Relance : “Comment tu le sais ? Qu’est-ce qui te le prouve ?”',
-          'Si blocage : proposer “mettre au même dénominateur” ou “repère 1/2, 1”.',
-          'Faire dessiner des bandes (barres) plutôt que des cercles si ça dérape.'
+          'Si blocage : “même dénominateur”, “équivalentes”, “repères 1/2 et 1”.',
+          'Si ça dérape : faire dessiner des bandes (barres) plutôt que des cercles.'
         ],
         commonMistakes: [
           'Comparer uniquement les dénominateurs (ex : croire 1/8 > 1/6).',
           'Comparer uniquement les numérateurs (ex : croire 5/12 > 3/4).',
-          'Oublier que les “parts” doivent être égales (même tout).'
+          'Oublier que les parts doivent être égales (même tout).'
         ],
         answerKey: [
-          'Stratégie “même dénominateur” : numérateur plus grand → fraction plus grande.',
-          'Stratégie “équivalentes” : multiplier numérateur/dénominateur par le même nombre.',
-          'Produit croisé (si tu l’acceptes) : comparer a×d2 et b×d1.',
-          'Proche de 1 : comparer ce qui manque pour atteindre 1.'
+          'Même dénominateur : numérateur plus grand → fraction plus grande.',
+          'Équivalentes : multiplier numérateur/dénominateur par le même nombre.',
+          'Proche de 1 : comparer ce qui manque pour atteindre 1.',
+          'Produit croisé : comparer a×d2 et b×d1 (si tu l’acceptes).'
         ],
         extensions: [
           'Niveau + : imposer une justification différente de la manche précédente.',
-          'Niveau + : demander “la différence” (combien de parts d’écart) quand même dénominateur.',
+          'Niveau + : demander “combien de parts d’écart” quand même dénominateur.',
           'Exit ticket : comparer 3/4 et 5/8 + justification écrite.'
         ]
       };

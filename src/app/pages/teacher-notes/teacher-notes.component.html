@@ -1,4 +1,4 @@
-<mat-toolbar class="toolbar">
+<mat-toolbar class="toolbar no-print">
   <a mat-button routerLink="/">
     <mat-icon>arrow_back</mat-icon>
     Retour
@@ -10,6 +10,10 @@
   <a mat-stroked-button color="primary" [routerLink]="['/a', id()]">
     Ouvrir le jeu
   </a>
+
+  <button mat-raised-button color="primary" (click)="print()" style="margin-left:10px">
+    Imprimer
+  </button>
 </mat-toolbar>
 
 <div class="wrap" *ngIf="sheet() as s; else nf">

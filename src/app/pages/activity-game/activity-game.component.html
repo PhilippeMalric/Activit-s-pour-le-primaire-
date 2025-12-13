@@ -8,21 +8,87 @@
   <span class="spacer"></span>
 
   <mat-chip-set class="chips">
+    <mat-chip>Manche {{ roundIndex() + 1 }}/{{ maxRounds() }}</mat-chip>
     <mat-chip>Score {{ score() }}/{{ total() }}</mat-chip>
-    <mat-chip>Combo {{ streak() }}</mat-chip>
+    <mat-chip>Réussite {{ accuracy() }}%</mat-chip>
+    <mat-chip *ngIf="timerSec() > 0">⏱ {{ timeLeft() }}s</mat-chip>
   </mat-chip-set>
 
   <button mat-icon-button (click)="toggleFullscreen()" aria-label="Plein écran">
     <mat-icon>fullscreen</mat-icon>
   </button>
 
-  <button mat-icon-button (click)="resetGame()" aria-label="Reset">
+  <button mat-icon-button (click)="startNewGame()" aria-label="Reset">
     <mat-icon>restart_alt</mat-icon>
   </button>
 </mat-toolbar>
 
-<div class="wrap" *ngIf="round() as r">
-  <mat-card class="card big">
+<div class="wrap">
+  <mat-card class="settings">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Difficulté</mat-label>
+        <mat-select [value]="difficulty()" (selectionChange)="difficulty.set($event.value); applySettings()">
+          <mat-option value="Facile">Facile</mat-option>
+          <mat-option value="Moyen">Moyen</mat-option>
+          <mat-option value="Difficile">Difficile</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Timer</mat-label>
+        <mat-select [value]="timerSec()" (selectionChange)="timerSec.set($event.value); applySettings()">
+          <mat-option [value]="0">0 s</mat-option>
+          <mat-option [value]="5">5 s</mat-option>
+          <mat-option [value]="10">10 s</mat-option>
+          <mat-option [value]="15">15 s</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Manches</mat-label>
+        <mat-select [value]="maxRounds()" (selectionChange)="maxRounds.set($event.value); applySettings()">
+          <mat-option [value]="5">5</mat-option>
+          <mat-option [value]="10">10</mat-option>
+          <mat-option [value]="15">15</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="teams" *ngIf="teamsEnabled()">
+      <div class="teams-title">Équipes</div>
+      <div class="team-buttons">
+        <button mat-stroked-button *ngFor="let t of teams"
+                [disabled]="finished()"
+                (click)="setTeam(t)"
+                [class.active]="activeTeam() === t">
+          Équipe {{ t }} • {{ teamScores()[t] || 0 }}
+        </button>
+      </div>
+      <div class="teams-hint">Clique une équipe avant de répondre.</div>
+    </div>
+  </mat-card>
+
+  <!-- Fin de partie -->
+  <mat-card class="card end" *ngIf="finished()">
+    <div class="mission">Bilan</div>
+
+    <div class="stats">
+      <div class="stat"><div class="k">Réussite</div><div class="v">{{ accuracy() }}%</div></div>
+      <div class="stat"><div class="k">Bonnes</div><div class="v">{{ correctCount() }}</div></div>
+      <div class="stat"><div class="k">Fausses</div><div class="v">{{ wrongCount() }}</div></div>
+      <div class="stat"><div class="k">Temps écoulé</div><div class="v">{{ timeoutCount() }}</div></div>
+      <div class="stat" *ngIf="teamsEnabled()"><div class="k">Meilleure équipe</div><div class="v">{{ bestTeam() }}</div></div>
+    </div>
+
+    <div class="bottom">
+      <button mat-raised-button color="primary" (click)="startNewGame()">Rejouer</button>
+      <a mat-stroked-button color="primary" [routerLink]="['/t', 'math-fractions-compare-2']">Consignes enseignant</a>
+    </div>
+  </mat-card>
+
+  <!-- Jeu -->
+  <mat-card class="card big" *ngIf="!finished() && round() as r">
     <div class="mission">Quelle fraction est la plus grande ?</div>
 
     <div class="fractions">
@@ -47,9 +113,11 @@
 
     <div class="feedback ok" *ngIf="feedback()==='ok'">✅ Correct</div>
     <div class="feedback bad" *ngIf="feedback()==='bad'">❌ Pas tout à fait</div>
+    <div class="feedback bad" *ngIf="feedback()==='timeout'">⏱ Temps écoulé</div>
 
     <div class="hint">
       <span>Indice :</span> {{ r.hint }}
+      <span class="tag">({{ r.strategy }})</span>
     </div>
 
     <div class="explain" *ngIf="showExplain()">
@@ -57,7 +125,10 @@
     </div>
 
     <div class="bottom">
-      <button mat-stroked-button (click)="toggleExplain()"> {{ showExplain() ? 'Masquer explication' : 'Voir explication' }} </button>
+      <button mat-stroked-button (click)="toggleExplain()">
+        {{ showExplain() ? 'Masquer explication' : 'Voir explication' }}
+      </button>
+
       <button mat-raised-button color="accent" (click)="next()">Prochaine</button>
     </div>
   </mat-card>

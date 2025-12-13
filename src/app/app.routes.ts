@@ -12,8 +12,8 @@ export const routes: Routes = [
     children: [
       { path: '', component: ActivitiesComponent },
       { path: 'favoris', component: FavoritesComponent },
-      { path: 'a/:id', component: ActivityGameComponent },     // au tableau
-      { path: 't/:id', component: TeacherNotesComponent },     // enseignant
+      { path: 'a/:id', component: ActivityGameComponent },
+      { path: 't/:id', component: TeacherNotesComponent },
       { path: '**', redirectTo: '' }
     ]
   }
