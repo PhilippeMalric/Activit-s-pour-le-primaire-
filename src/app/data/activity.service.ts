@@ -14,6 +14,16 @@ export type Activity = {
 };
 
 const ACTIVITIES: Activity[] = [
+  {
+    id: 'math-fractions-compare-2',
+    title: 'Comparer des fractions (tableau)',
+    subject: 'Math',
+    cycle: 2,
+    durationMin: 30,
+    group: 'Équipe',
+    objective: 'Comparer des fractions avec des représentations, des repères (1/2, 1) et des équivalences.'
+  },
+
   { id: 'fra-phrase-1', title: 'Phrases qui ont du punch', subject: 'Français', cycle: 1, durationMin: 20, group: 'Dyade', objective: 'Construire des phrases complètes (majuscule, sens, point).' },
   { id: 'math-fractions-2', title: 'La pizzeria des fractions', subject: 'Math', cycle: 2, durationMin: 30, group: 'Équipe', objective: 'Représenter des fractions simples et comparer des parts.' },
   { id: 'sci-melanges-3', title: 'Mélange ou pas mélange ?', subject: 'Science', cycle: 3, durationMin: 35, group: 'Groupe', objective: 'Distinguer soluble / insoluble.' },

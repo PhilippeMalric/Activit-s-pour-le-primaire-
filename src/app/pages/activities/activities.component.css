@@ -6,7 +6,9 @@ mat-form-field { width: 220px; max-width: 100%; }
 
 .card { border-radius: 16px; }
 .head { display:flex; justify-content: space-between; align-items:start; gap: 8px; }
-.title { font-weight: 800; font-size: 16px; }
+.title { font-weight: 900; font-size: 16px; }
 .objective { margin: 10px 0 0; opacity: .9; }
+
+.actions { margin-top: 12px; display:flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
 
 .empty { border-radius: 16px; padding: 12px; }

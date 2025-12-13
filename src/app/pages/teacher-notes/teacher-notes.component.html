@@ -1,0 +1,46 @@
+<mat-toolbar class="toolbar">
+  <a mat-button routerLink="/">
+    <mat-icon>arrow_back</mat-icon>
+    Retour
+  </a>
+
+  <span class="title">Enseignant</span>
+  <span class="spacer"></span>
+
+  <a mat-stroked-button color="primary" [routerLink]="['/a', id()]">
+    Ouvrir le jeu
+  </a>
+</mat-toolbar>
+
+<div class="wrap" *ngIf="sheet() as s; else nf">
+  <mat-card class="card">
+    <h1>{{ s.title }}</h1>
+
+    <h2>Intentions</h2>
+    <ul><li *ngFor="let x of s.intent">{{ x }}</li></ul>
+
+    <h2>Mise en place</h2>
+    <ul><li *ngFor="let x of s.setup">{{ x }}</li></ul>
+
+    <h2>Règles de jeu (gestion)</h2>
+    <ul><li *ngFor="let x of s.rules">{{ x }}</li></ul>
+
+    <h2>Animation (relances)</h2>
+    <ul><li *ngFor="let x of s.facilitation">{{ x }}</li></ul>
+
+    <h2>Erreurs fréquentes</h2>
+    <ul><li *ngFor="let x of s.commonMistakes">{{ x }}</li></ul>
+
+    <h2>Corrigé / idées de justification</h2>
+    <ul><li *ngFor="let x of s.answerKey">{{ x }}</li></ul>
+
+    <h2>Prolongements</h2>
+    <ul><li *ngFor="let x of s.extensions">{{ x }}</li></ul>
+  </mat-card>
+</div>
+
+<ng-template #nf>
+  <div class="wrap">
+    <mat-card class="card">Fiche enseignant introuvable.</mat-card>
+  </div>
+</ng-template>

@@ -1,0 +1,9 @@
+.toolbar { position: sticky; top: 0; z-index: 10; }
+.title { margin-left: 10px; font-weight: 900; }
+.spacer { flex: 1 1 auto; }
+
+.wrap { padding: 12px; max-width: 1000px; margin: 0 auto; }
+.card { border-radius: 18px; padding: 16px; }
+h1 { margin: 0 0 10px; font-size: 26px; }
+h2 { margin-top: 18px; }
+li { margin: 8px 0; }

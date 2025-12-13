@@ -1,0 +1,64 @@
+<mat-toolbar class="toolbar">
+  <a mat-button routerLink="/">
+    <mat-icon>arrow_back</mat-icon>
+    Retour
+  </a>
+
+  <span class="title">{{ title() }}</span>
+  <span class="spacer"></span>
+
+  <mat-chip-set class="chips">
+    <mat-chip>Score {{ score() }}/{{ total() }}</mat-chip>
+    <mat-chip>Combo {{ streak() }}</mat-chip>
+  </mat-chip-set>
+
+  <button mat-icon-button (click)="toggleFullscreen()" aria-label="Plein écran">
+    <mat-icon>fullscreen</mat-icon>
+  </button>
+
+  <button mat-icon-button (click)="resetGame()" aria-label="Reset">
+    <mat-icon>restart_alt</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div class="wrap" *ngIf="round() as r">
+  <mat-card class="card big">
+    <div class="mission">Quelle fraction est la plus grande ?</div>
+
+    <div class="fractions">
+      <div class="frac">
+        <div class="label">A</div>
+        <div class="value">{{ fracA() }}</div>
+      </div>
+
+      <div class="vs">VS</div>
+
+      <div class="frac">
+        <div class="label">B</div>
+        <div class="value">{{ fracB() }}</div>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button mat-raised-button color="primary" class="btn" (click)="pick('A')" [disabled]="locked()">A est plus grand</button>
+      <button mat-raised-button color="primary" class="btn" (click)="pick('B')" [disabled]="locked()">B est plus grand</button>
+      <button mat-stroked-button class="btn" (click)="pick('E')" [disabled]="locked()">Égal</button>
+    </div>
+
+    <div class="feedback ok" *ngIf="feedback()==='ok'">✅ Correct</div>
+    <div class="feedback bad" *ngIf="feedback()==='bad'">❌ Pas tout à fait</div>
+
+    <div class="hint">
+      <span>Indice :</span> {{ r.hint }}
+    </div>
+
+    <div class="explain" *ngIf="showExplain()">
+      <span>Explication :</span> {{ r.explain }}
+    </div>
+
+    <div class="bottom">
+      <button mat-stroked-button (click)="toggleExplain()"> {{ showExplain() ? 'Masquer explication' : 'Voir explication' }} </button>
+      <button mat-raised-button color="accent" (click)="next()">Prochaine</button>
+    </div>
+  </mat-card>
+</div>

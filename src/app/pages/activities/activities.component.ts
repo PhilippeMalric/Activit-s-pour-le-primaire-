@@ -1,5 +1,6 @@
 import { Component, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { ActivityService, Subject, Cycle } from '../../data/activity.service';
 import { globalSearchQuery } from '../../layout/search-bus';
 
@@ -13,7 +14,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 @Component({
   selector: 'app-activities',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatChipsModule, MatIconModule, MatButtonModule, MatSelectModule, MatFormFieldModule],
+  imports: [
+    CommonModule, RouterModule,
+    MatCardModule, MatChipsModule, MatIconModule, MatButtonModule, MatSelectModule, MatFormFieldModule
+  ],
   templateUrl: './activities.component.html',
   styleUrl: './activities.component.css'
 })

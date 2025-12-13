@@ -1,0 +1,84 @@
+<mat-toolbar class="toolbar">
+  <a mat-button routerLink="/">
+    <mat-icon>arrow_back</mat-icon>
+    Retour
+  </a>
+
+  <span class="spacer"></span>
+
+  <button mat-icon-button (click)="data.toggleFavorite((a()?.id || ''))" [disabled]="!a()">
+    <mat-icon>{{ fav() ? 'favorite' : 'favorite_border' }}</mat-icon>
+  </button>
+
+  <button mat-icon-button (click)="toggleFullscreen()" aria-label="Plein écran">
+    <mat-icon>fullscreen</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div class="wrap" *ngIf="a() as act; else notfound">
+  <mat-card class="hero">
+    <div class="h-title">{{ act.title }}</div>
+    <mat-chip-set class="chips">
+      <mat-chip>{{ act.subject }}</mat-chip>
+      <mat-chip>Cycle {{ act.cycle }}</mat-chip>
+      <mat-chip>{{ act.durationMin }} min</mat-chip>
+      <mat-chip>{{ act.group }}</mat-chip>
+    </mat-chip-set>
+
+    <div class="intro">{{ act.bigIntro }}</div>
+    <div class="objective"><span>Objectif :</span> {{ act.objective }}</div>
+
+    <div class="controls" *ngIf="act.steps.length">
+      <button mat-stroked-button (click)="prev()">Précédent</button>
+      <button mat-raised-button color="primary" (click)="next()">Suivant</button>
+      <button mat-button (click)="reset()">Reset</button>
+      <span class="step">
+        Étape {{ stepIndex() + 1 }} / {{ act.steps.length }}
+      </span>
+      <button mat-stroked-button (click)="revealAll.set(!revealAll())">
+        {{ revealAll() ? 'Masquer' : 'Tout afficher' }}
+      </button>
+    </div>
+  </mat-card>
+
+  <div class="grid">
+    <mat-card class="panel" *ngIf="act.materials.length">
+      <div class="p-title">Matériel</div>
+      <ul class="big-list">
+        <li *ngFor="let m of act.materials">{{ m }}</li>
+      </ul>
+    </mat-card>
+
+    <mat-card class="panel">
+      <div class="p-title">Déroulement</div>
+
+      <ol class="big-list" *ngIf="act.steps.length">
+        <ng-container *ngFor="let s of act.steps; let i = index">
+          <li *ngIf="revealAll() || i <= stepIndex()">{{ s }}</li>
+        </ng-container>
+      </ol>
+
+      <div class="empty" *ngIf="!act.steps.length">Aucune étape définie.</div>
+    </mat-card>
+
+    <mat-card class="panel" *ngIf="act.quickChecks.length">
+      <div class="p-title">Vérifs rapides</div>
+      <ul class="big-list">
+        <li *ngFor="let c of act.quickChecks">{{ c }}</li>
+      </ul>
+    </mat-card>
+
+    <mat-card class="panel" *ngIf="act.teacherNotes.length">
+      <div class="p-title">Notes enseignant</div>
+      <ul class="big-list">
+        <li *ngFor="let n of act.teacherNotes">{{ n }}</li>
+      </ul>
+    </mat-card>
+  </div>
+</div>
+
+<ng-template #notfound>
+  <div class="wrap">
+    <mat-card class="panel">Activité introuvable.</mat-card>
+  </div>
+</ng-template>

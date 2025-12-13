@@ -31,6 +31,11 @@
     </mat-chip-set>
 
     <p class="objective">{{ a.objective }}</p>
+
+    <div class="actions">
+      <a mat-raised-button color="primary" [routerLink]="['/a', a.id]">Ouvrir le jeu (tableau)</a>
+      <a mat-stroked-button color="primary" [routerLink]="['/t', a.id]">Consignes enseignant</a>
+    </div>
   </mat-card>
 
   <mat-card *ngIf="filtered().length === 0" class="empty">
