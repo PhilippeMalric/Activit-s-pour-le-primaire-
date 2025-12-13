@@ -1,0 +1,9 @@
+.grid { display:grid; gap:12px; grid-template-columns: 1fr; }
+@media (min-width: 800px) { .grid { grid-template-columns: 1fr 1fr; } }
+
+.card { border-radius: 16px; }
+.head { display:flex; justify-content: space-between; align-items:start; gap: 8px; }
+.title { font-weight: 800; font-size: 16px; }
+.objective { margin: 10px 0 0; opacity: .9; }
+
+.empty { border-radius: 16px; padding: 12px; }

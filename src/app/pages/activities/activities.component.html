@@ -1,0 +1,39 @@
+<div class="filters">
+  <mat-form-field appearance="outline">
+    <mat-label>Matière</mat-label>
+    <mat-select [value]="subject()" (selectionChange)="subject.set($event.value)">
+      <mat-option *ngFor="let s of subjects" [value]="s">{{ s }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Cycle</mat-label>
+    <mat-select [value]="cycle()" (selectionChange)="cycle.set($event.value)">
+      <mat-option *ngFor="let c of cycles" [value]="c">{{ c === 'Tous' ? 'Tous' : ('Cycle ' + c) }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div class="grid">
+  <mat-card *ngFor="let a of filtered()" class="card">
+    <div class="head">
+      <div class="title">{{ a.title }}</div>
+      <button mat-icon-button (click)="data.toggleFavorite(a.id)" aria-label="Favori">
+        <mat-icon>{{ data.isFavorite(a.id) ? 'favorite' : 'favorite_border' }}</mat-icon>
+      </button>
+    </div>
+
+    <mat-chip-set>
+      <mat-chip>{{ a.subject }}</mat-chip>
+      <mat-chip>Cycle {{ a.cycle }}</mat-chip>
+      <mat-chip>{{ a.durationMin }} min</mat-chip>
+      <mat-chip>{{ a.group }}</mat-chip>
+    </mat-chip-set>
+
+    <p class="objective">{{ a.objective }}</p>
+  </mat-card>
+
+  <mat-card *ngIf="filtered().length === 0" class="empty">
+    Aucun résultat.
+  </mat-card>
+</div>

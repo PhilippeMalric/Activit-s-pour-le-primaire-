@@ -1,0 +1,46 @@
+<mat-sidenav-container class="container">
+  <mat-sidenav #drawer mode="over" class="sidenav">
+    <div class="brand">
+      <div class="logo">🎒</div>
+      <div>
+        <div class="name">Activités</div>
+        <div class="sub">Primaire</div>
+      </div>
+    </div>
+
+    <mat-nav-list>
+      <a mat-list-item routerLink="/" (click)="drawer.close()">
+        <mat-icon matListItemIcon>list</mat-icon>
+        <span matListItemTitle>Toutes les activités</span>
+      </a>
+
+      <a mat-list-item routerLink="/favoris" (click)="drawer.close()">
+        <mat-icon matListItemIcon>favorite</mat-icon>
+        <span matListItemTitle>Favoris</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar class="toolbar">
+      <button mat-icon-button (click)="drawer.toggle()" aria-label="Menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <span class="title">{{ pageTitle() }}</span>
+      <span class="spacer"></span>
+
+      <mat-form-field appearance="outline" class="search">
+        <mat-label>Rechercher</mat-label>
+        <input matInput (input)="query.set($any($event.target).value)" placeholder="fractions, phrases, science…" />
+        <button mat-icon-button matSuffix (click)="query.set('')" aria-label="Effacer">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </mat-toolbar>
+
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
